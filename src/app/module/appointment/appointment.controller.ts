@@ -1,0 +1,64 @@
+import type { Request, Response } from "express";
+import { catchAsync } from "../../utils/catchAsync";
+import { sendResponse } from "../../utils/sendResponse";
+import httpStatus from "http-status";
+import { AppointmentServices } from "./appointment.service";
+
+const bookAppointment = catchAsync(async (req: Request, res: Response) => {
+	const payload = req.body;
+	const user = req.user!;
+	const result = await AppointmentServices.bookAppointment(payload, user);
+	sendResponse(res, {
+		statusCode: httpStatus.OK,
+		success: true,
+
+		message: "Appoinment payment initiated successfully.",
+		data: result,
+	});
+});
+
+const payAppointment = catchAsync(async (req: Request, res: Response) => {
+	const payload = req.body;
+	const user = req.user!;
+	const result = await AppointmentServices.payAppointment(payload, user);
+	sendResponse(res, {
+		statusCode: httpStatus.OK,
+		success: true,
+
+		message: "Appoinment payment initiated successfully.",
+		data: result,
+	});
+});
+
+const bookAppointmentCallback = catchAsync(
+	async (req: Request, res: Response) => {
+		const { redirectUrl } = await AppointmentServices.bookAppointmentCallback(
+			req.query,
+		);
+		res.redirect(redirectUrl);
+		// sendResponse(res, {
+		// 	statusCode: httpStatus.OK,
+		// 	success: true,
+		// 	message: "Payment processed successfully.",
+		// 	data: result,
+		// });
+	},
+);
+
+const cancelAppointment = catchAsync(async (req: Request, res: Response) => {
+	const payload = req.body;
+	const result = await AppointmentServices.cancelAppointmet(payload);
+	sendResponse(res, {
+		statusCode: httpStatus.OK,
+		success: true,
+		message: "Cancel Appointment initiated successfully.",
+		data: result,
+	});
+});
+
+export const AppointmentController = {
+	bookAppointment,
+	payAppointment,
+	bookAppointmentCallback,
+	cancelAppointment,
+};
