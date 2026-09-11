@@ -1,6 +1,11 @@
 import bcrypt from "bcryptjs";
+import crypto from "crypto";
+import ejs from "ejs";
 import type { TokenPayload } from "google-auth-library";
+import httpStatus from "http-status";
 import type { JwtPayload, SignOptions } from "jsonwebtoken";
+import path from "path";
+import { cwd } from "process";
 import {
 	AuthProvider,
 	Role,
@@ -8,7 +13,10 @@ import {
 } from "../../../generated/prisma/enums";
 import config from "../../config";
 import { googleClient } from "../../lib/googleAuth";
+import { transporter } from "../../lib/nodemailer";
 import { prisma } from "../../lib/prisma";
+import { redisClient } from "../../lib/redis";
+import { AppError } from "../../utils/AppError";
 import { jwtUtils } from "../../utils/jwt";
 import type {
 	IForgotPasswordPayload,
@@ -19,14 +27,6 @@ import type {
 	IResetPasswordPayload,
 	IVerifyEmailPayload,
 } from "./auth.interface";
-import { redisClient } from "../../lib/redis";
-import crypto from "crypto";
-import { transporter } from "../../lib/nodemailer";
-import ejs from "ejs";
-import path from "path";
-import { cwd } from "process";
-import { AppError } from "../../utils/AppError";
-import httpStatus from "http-status";
 
 const registerPatient = async (payload: IRegisterPatientPayload) => {
 	const { name, password, patient: patientData } = payload;

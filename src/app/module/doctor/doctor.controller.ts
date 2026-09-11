@@ -1,9 +1,9 @@
 import type { Request, Response } from "express";
-import { catchAsync } from "../../utils/catchAsync";
-import { DoctorServices } from "./doctor.service";
-import { sendResponse } from "../../utils/sendResponse";
 import httpStatus from "http-status";
 import { AppError } from "../../utils/AppError";
+import { catchAsync } from "../../utils/catchAsync";
+import { sendResponse } from "../../utils/sendResponse";
+import { DoctorServices } from "./doctor.service";
 import { ApplyAsDoctorZodSchema } from "./doctor.validation";
 
 const applyAsDoctor = catchAsync(async (req: Request, res: Response) => {

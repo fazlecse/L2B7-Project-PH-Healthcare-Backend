@@ -1,29 +1,29 @@
-import type { UploadApiResponse } from "cloudinary";
-import { prisma } from "../../lib/prisma";
-import { cloudinary } from "../../lib/cloudinary";
 import { resolve } from "node:dns";
 import bcrypt from "bcryptjs";
-import config from "../../config";
-import { includes } from "zod";
+import type { UploadApiResponse } from "cloudinary";
+import crypto from "crypto";
+import ejs from "ejs";
 import httpStatus from "http-status";
+import path from "path";
+import { includes } from "zod";
 import {
 	DoctorVerificationStatus,
 	Role,
 } from "../../../generated/prisma/enums";
-import crypto from "crypto";
+import type { DoctorWhereInput } from "../../../generated/prisma/models";
+import config from "../../config";
+import type { IQuery } from "../../interfaces";
+import { cloudinary } from "../../lib/cloudinary";
+import { transporter } from "../../lib/nodemailer";
+import { prisma } from "../../lib/prisma";
 import { redisClient } from "../../lib/redis";
-import path from "path";
+import type { RequestUser } from "../../middleware/checkAuth";
+import { AppError } from "../../utils/AppError";
 import type {
 	IApplyAsDoctorPayload,
 	IApproveDoctorPayload,
 	IVerifyDoctorEmailPayload,
 } from "./doctor.interface";
-import { transporter } from "../../lib/nodemailer";
-import ejs from "ejs";
-import type { RequestUser } from "../../middleware/checkAuth";
-import type { IQuery } from "../../interfaces";
-import type { DoctorWhereInput } from "../../../generated/prisma/models";
-import { AppError } from "../../utils/AppError";
 
 const applyAsDoctor = async (
 	payload: IApplyAsDoctorPayload,

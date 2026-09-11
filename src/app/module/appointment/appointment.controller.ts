@@ -1,7 +1,7 @@
 import type { Request, Response } from "express";
+import httpStatus from "http-status";
 import { catchAsync } from "../../utils/catchAsync";
 import { sendResponse } from "../../utils/sendResponse";
-import httpStatus from "http-status";
 import { AppointmentServices } from "./appointment.service";
 
 const bookAppointment = catchAsync(async (req: Request, res: Response) => {

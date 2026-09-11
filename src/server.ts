@@ -1,6 +1,7 @@
 import cron from "node-cron";
 import app from "./app";
 import config from "./app/config";
+import { deleteUnverifiedDoctors } from "./app/lib/cron";
 import { transporter } from "./app/lib/nodemailer";
 import { prisma } from "./app/lib/prisma";
 import { redisClient } from "./app/lib/redis";
@@ -9,7 +10,6 @@ import {
 	seedTesterAdmin,
 	seedTesterDoctor,
 } from "./app/utils/seed";
-import { deleteUnverifiedDoctors } from "./app/lib/cron";
 
 const PORT = config.port;
 
