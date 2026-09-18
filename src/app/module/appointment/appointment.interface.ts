@@ -10,3 +10,6 @@ export interface IPayAppointmentPayload {
 export interface ICancelAppointmentPayload {
 	appointmentId: string;
 }
+export interface IUpdateAppointmentStatusPayload {
+	status: "ONGOING" | "COMPLETED";
+}
