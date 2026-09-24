@@ -1,5 +1,5 @@
 import bcrypt from "bcryptjs";
-import { Role } from "../../generated/prisma/enums";
+import { DoctorVerificationStatus, Role } from "../../generated/prisma/enums";
 import config from "../config";
 import { prisma } from "../lib/prisma";
 
@@ -139,6 +139,7 @@ export const seedTesterDoctor = async () => {
 						licenseNumber: "BMDC0000",
 						qualifications: "MBBS",
 						specialization: "Neurolozy",
+						verificationStatus: DoctorVerificationStatus.APPROVED,
 					},
 				},
 			},
